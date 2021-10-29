@@ -2,33 +2,37 @@ package com.iztech.librarymanagementapp;
 
 public class LibraryQuery {
 
-	private String membersCSV = "src/data/Members.csv";
-	private String library01Books = "src/data/L1_Books.csv";
-	private String library02Books = "src/data/L2_Books.csv";
-	private String library03Books = "src/data/L3_Books.csv";
-	private String library01Issue = "src/data/L1_Issues.csv";
-	private String library02Issue = "src/data/L2_Issues.csv";
-	private String library03Issue = "src/data/L3_Issues.csv";
+	private static String membersCSV = "src/data/Members.csv";
+	private static String library01Books = "src/data/L1_Books.csv";
+	private static String library02Books = "src/data/L2_Books.csv";
+	private static String library03Books = "src/data/L3_Books.csv";
+	private static String library01Issue = "src/data/L1_Issues.csv";
+	private static String library02Issue = "src/data/L2_Issues.csv";
+	private static String library03Issue = "src/data/L3_Issues.csv";
+
+	private static LibraryManagement libManagement = FileIO.getIssues(library01Issue, library02Issue, library03Issue);
+	private static Issue[][] issues = libManagement.getIssues();
+	private static String[] libraries = { library01Books, library02Books, library03Books };
+	private static Member[] members = FileIO.getMembers(membersCSV);
 
 	private String[] findIssuedBook(int libraryIndex, String dataPath) {
 
-		LibraryManagement libManagement = FileIO.getIssues(library01Issue, library02Issue, library03Issue);
 		Library library = FileIO.getBooks(dataPath);
 
-		Issue[] issue = libManagement.getIssues()[libraryIndex];
+		Issue[] issues = libManagement.getIssues()[libraryIndex];
 		Book[] book = library.getBook();
 
 		int max = 0;
 		String maxName = null;
 		String tempMax = null;
 
-		for (int i = 0; i < issue.length; i++) {
+		for (int i = 0; i < issues.length; i++) {
 			int count = 1;
-			for (int j = i + 1; j < issue.length; j++) {
+			for (int j = i + 1; j < issues.length; j++) {
 
-				if (issue[j] != null) {
+				if (issues[j] != null) {
 
-					if (issue[i].getBook().equals(issue[j].getBook())) {
+					if (issues[i].getBook().equals(issues[j].getBook())) {
 						count++;
 					}
 
@@ -38,7 +42,7 @@ public class LibraryQuery {
 			}
 			if (max < count) {
 				max = count;
-				tempMax = issue[i].getBook();
+				tempMax = issues[i].getBook();
 			}
 		}
 		for (Book maxBook : book) {
@@ -77,10 +81,6 @@ public class LibraryQuery {
 
 	public void getMemberMostIssue() {
 
-		LibraryManagement libManagement = FileIO.getIssues(library01Issue, library02Issue, library03Issue);
-		Member[] members = FileIO.getMembers(membersCSV);
-
-		Issue[][] issues = libManagement.getIssues();
 		String maxMember = null;
 
 		int max = 0;
@@ -94,7 +94,6 @@ public class LibraryQuery {
 
 						if (member.getId().equals(issue.getMember())) {
 							count++;
-							// System.out.println(member.getName());
 						}
 					}
 				}
@@ -112,9 +111,6 @@ public class LibraryQuery {
 		String[] months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 		int[] days = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-		LibraryManagement libManagement = FileIO.getIssues(library01Issue, library02Issue, library03Issue);
-		Issue[][] issue = libManagement.getIssues();
-
 		String[] tempReturnDate = null;
 		String[] tempIssueDate = null;
 
@@ -124,12 +120,12 @@ public class LibraryQuery {
 
 		for (int i = 0; i < 3; i++) {
 
-			for (Issue issues : issue[i]) {
+			for (Issue issue : issues[i]) {
 
-				if (issues != null) {
+				if (issue != null) {
 
-					tempReturnDate = issues.getReturningDate().split("-");
-					tempIssueDate = issues.getIssueDate().split("-");
+					tempReturnDate = issue.getReturningDate().split("-");
+					tempIssueDate = issue.getIssueDate().split("-");
 
 					for (int j = 0; j < months.length; j++) {
 
@@ -176,7 +172,6 @@ public class LibraryQuery {
 
 		Library library = null;
 		Book[] books = null;
-		String[] libraries = { library01Books, library02Books, library03Books };
 		int max = 0;
 		String maxName = null;
 
@@ -203,10 +198,6 @@ public class LibraryQuery {
 
 	public void getFewestCopyIssuedBooks() {
 
-		LibraryManagement libManagement = FileIO.getIssues(library01Issue, library02Issue, library03Issue);
-		Issue[][] issues = libManagement.getIssues();
-
-		String[] libraries = { library01Books, library02Books, library03Books };
 		Library library = null;
 		Book[] books;
 
@@ -244,11 +235,6 @@ public class LibraryQuery {
 	}
 
 	public void getMemberLeastIssue() {
-
-		LibraryManagement libManagement = FileIO.getIssues(library01Issue, library02Issue, library03Issue);
-		Issue[][] issues = libManagement.getIssues();
-
-		Member[] members = FileIO.getMembers(membersCSV);
 
 		int minCount = 100;
 		String minName = null;

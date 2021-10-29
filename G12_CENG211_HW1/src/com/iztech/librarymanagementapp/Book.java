@@ -1,7 +1,7 @@
 package com.iztech.librarymanagementapp;
 
 public class Book {
-	
+
 	private String id;
 	private String title;
 	private String author;
@@ -9,38 +9,37 @@ public class Book {
 	private String edition;
 	private String genre;
 	private int quantity;
-	
-	
+
 	public Book() {
 		this(null, null, null, null, null, null, 0);
 	}
-	
+
 	public Book(String id, String title, String author, String publisher, String edition, String genre, int quantity) {
-		
+
 		this.id = id;
 		this.title = title;
-		this.author= author;
+		this.author = author;
 		this.publisher = publisher;
 		this.edition = edition;
 		this.genre = genre;
 		this.quantity = quantity;
-		
+
 	}
-	
+
 	public Book(Book oldBook) {
-		
-		if(oldBook == null) {
+
+		if (oldBook == null) {
 			System.out.println("Fatal Error!");
 			System.exit(0);
 		}
 		this.id = oldBook.id;
 		this.title = oldBook.title;
-		this.author= oldBook.author;
+		this.author = oldBook.author;
 		this.publisher = oldBook.publisher;
 		this.edition = oldBook.edition;
 		this.genre = oldBook.genre;
 		this.quantity = oldBook.quantity;
-		
+
 	}
 
 	public String getId() {
@@ -98,7 +97,5 @@ public class Book {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
-	
 
 }

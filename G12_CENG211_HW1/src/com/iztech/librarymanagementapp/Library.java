@@ -1,36 +1,38 @@
 package com.iztech.librarymanagementapp;
 
 public class Library {
-	
-	private Book[] book;
-	
+
+	private Book[] books;
+
 	public Library() {
-		this.book = new Book[100];
+		this.books = new Book[100];
 	}
+
 	public Library(Book[] book) {
-		this.book = book;
+		this.books = book;
 	}
+
 	public Library(Library oldLibrary) {
-		
-		if(oldLibrary == null) {
+
+		if (oldLibrary == null) {
 			System.out.println("Fatal Error");
 			System.exit(0);
 		}
-		this.book = oldLibrary.book;
+		this.books = oldLibrary.books;
 	}
+
 	public Book[] getBook() {
-				
-		Book[] copyBookArray = new Book[this.book.length];
-		for(int i=0; i<this.book.length ; i++) {
-			copyBookArray[i] = this.book[i];
+
+		Book[] copyBookArray = new Book[this.books.length];
+		for (int i = 0; i < this.books.length; i++) {
+			copyBookArray[i] = this.books[i];
 		}
 		return copyBookArray;
 	}
-	public void setBook(Book[] book) {
-		
-		this.book = book;
-	}
-	
 
+	public void setBook(Book[] books) {
+
+		this.books = books;
+	}
 
 }

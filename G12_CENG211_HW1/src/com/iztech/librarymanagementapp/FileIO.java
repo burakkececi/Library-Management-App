@@ -65,7 +65,7 @@ public class FileIO {
 				index++;
 
 			}
-			
+
 			inFile.close();
 
 		} catch (FileNotFoundException e) {
@@ -113,11 +113,11 @@ public class FileIO {
 	}
 
 	public static Member[] getMembers(String dataPath) {
-		
+
 		FileIO file = new FileIO();
 
 		Member[] members = file.getDataMembers(dataPath);
-		
+
 		return members;
 	}
 
@@ -133,32 +133,18 @@ public class FileIO {
 	public static LibraryManagement getIssues(String... dataPath) {
 
 		FileIO file = new FileIO();
-		
+
 		Issue[][] issues = new Issue[3][50];
 		int index = 0;
 
-		for(int i=0; i<3 ; i++) {
+		for (int i = 0; i < 3; i++) {
 			index = 0;
-			for(int j=0; j<file.getDataIssues(dataPath[i]).length;j++) {
+			for (int j = 0; j < file.getDataIssues(dataPath[i]).length; j++) {
 				issues[i][j] = file.getDataIssues(dataPath[i])[j];
 			}
 		}
 
 		return new LibraryManagement(issues);
-	}
-
-	public static void main(String[] args) {
-//
-		Member[] member = FileIO.getMembers("src/data/Members.csv");
-		//Library library = FileIO.getBooks("src/data/L1_Books.csv");
-		
-		 //System.out.println(library.getBook()[6].getAuthor());
-//
-		 System.out.println(member[1].getName());
-//
-		 LibraryManagement libraryManagement = FileIO.getIssues("src/data/L1_Issues.csv");
-//
-//		// System.out.println(FileIO.getDataIssues("src/data/L3_Issues.csv").length);
 	}
 
 }
