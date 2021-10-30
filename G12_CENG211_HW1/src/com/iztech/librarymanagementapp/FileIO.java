@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Scanner;
 
 public class FileIO {
-
+	
 	private Member[] getDataMembers(String dataPath) {
 
 		Scanner inFile = null;
@@ -33,8 +33,6 @@ public class FileIO {
 
 		} catch (FileNotFoundException e) {
 			System.out.println("File Not Found" + e.getMessage());
-		} catch (IOException e) {
-			System.out.println("System Error" + e.getMessage());
 		}
 
 		return members;
@@ -65,14 +63,12 @@ public class FileIO {
 				index++;
 
 			}
-			
+
 			inFile.close();
 
 		} catch (FileNotFoundException e) {
 			System.out.println("File Not Found" + e.getMessage());
-		} catch (IOException e) {
-			System.out.println("System Error" + e.getMessage());
-		}
+		} 
 
 		return books;
 
@@ -106,24 +102,23 @@ public class FileIO {
 
 		} catch (FileNotFoundException e) {
 			System.out.println("File Not Found" + e.getMessage());
-		} catch (IOException e) {
-			System.out.println("System Error" + e.getMessage());
-		}
+		} 
 		return issues;
 	}
 
 	public static Member[] getMembers(String dataPath) {
-		
+
 		FileIO file = new FileIO();
 
 		Member[] members = file.getDataMembers(dataPath);
-		
+
 		return members;
 	}
 
 	public static Library getBooks(String dataPath) {
 
 		FileIO file = new FileIO();
+		
 		Library library = new Library(file.getDataBooks(dataPath));
 
 		return new Library(library);
@@ -133,32 +128,18 @@ public class FileIO {
 	public static LibraryManagement getIssues(String... dataPath) {
 
 		FileIO file = new FileIO();
-		
+
 		Issue[][] issues = new Issue[3][50];
 		int index = 0;
 
-		for(int i=0; i<3 ; i++) {
+		for (int i = 0; i < dataPath.length; i++) {
 			index = 0;
-			for(int j=0; j<file.getDataIssues(dataPath[i]).length;j++) {
+			for (int j = 0; j < file.getDataIssues(dataPath[i]).length; j++) {
 				issues[i][j] = file.getDataIssues(dataPath[i])[j];
 			}
 		}
 
 		return new LibraryManagement(issues);
-	}
-
-	public static void main(String[] args) {
-//
-		Member[] member = FileIO.getMembers("src/data/Members.csv");
-		//Library library = FileIO.getBooks("src/data/L1_Books.csv");
-		
-		 //System.out.println(library.getBook()[6].getAuthor());
-//
-		 System.out.println(member[1].getName());
-//
-		 LibraryManagement libraryManagement = FileIO.getIssues("src/data/L1_Issues.csv");
-//
-//		// System.out.println(FileIO.getDataIssues("src/data/L3_Issues.csv").length);
 	}
 
 }
